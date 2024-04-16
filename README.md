@@ -47,7 +47,22 @@
 ![image](https://github.com/sayyed-123/Flask-on-eks/assets/166358159/33315c77-a1bb-4336-89f2-99f87cd47332)
 
 
-
+### create your ECR Repo
+    $ aws ecr create-repository --repository-name <REPO-NAME> --region us-west-2
+### Authenticate your docker to ecr
+    $ aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 440896245143.dkr.ecr.us-west-2.amazonaws.com
+### docker Build
+    $ docker build -t <app-name> .
+### docker tag
+    $ docker tag <IMAGE-NAME>:latest <ACCOUNTID>.dkr.ecr.us-west-2.amazonaws.com/<ECR-REPO-NAME>:latest
+### docker push
+    $ docker push <ACCOUNTID>.dkr.ecr.us-west-2.amazonaws.com/<ECR-REPO-NAME>:latest
+### Create our deployment
+    $ kubectl apply -f deployment.yaml
+### Create service
+    $ kubectl apply -f service.yaml
+### access Flask app
+    $ kubectl get services ( paste url to browser to access the Flask application)
 
 
 
