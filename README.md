@@ -66,25 +66,29 @@
 ### access Flask app
     $ kubectl get services ( paste url to browser to access the Flask application)
 ====================================================================================================================
+
+https://cmakkaya.medium.com/kubernetes-creating-and-testing-a-horizontal-pod-autoscaling-hpa-in-kubernetes-cluster-548f2378f0c3
+
+https://katharharshal1.medium.com/kubernetes-cluster-autoscaling-ca-using-aws-eks-4aab8c89f9a1
 ## OR
 ### Create cluster with Autoscaling
     ( For Horizontal Pod Scaling & Cluster Autoscaling )
-    eksctl create cluster --name <CLUSTER-NAME> --region us-west-2 --managed --asg-access 
+      eksctl create cluster --name <CLUSTER-NAME> --region us-west-2 --managed --asg-access 
 https://katharharshal1.medium.com/kubernetes-cluster-autoscaling-ca-using-aws-eks-4aab8c89f9a1
-### - Deploy " Cluster Autoscaler" to your cluster
-    kubectl apply -f cluster-autoscaler-autodiscover.yaml
-### - Add the " cluster-autoscaler.kubernetes.io/safe-to-evict "
-    kubectl -n kube-system annotate deployment.apps/cluster-autoscaler cluster-autoscaler.kubernetes.io/safe-to-evict="false"
-### - Edit the cluster autoscaler deployment 
-    kubectl -n kube-system edit deployment.apps/cluster-autoscaler
-#### - replace <YOUR-CLUSTER-NAME>  &  add the following options
-   --balance-similar-node-group
-   --skip-nodes-with-system-pods=false
+### Deploy " Cluster Autoscaler" to your cluster
+        kubectl apply -f cluster-autoscaler-autodiscover.yaml
+### Add the " cluster-autoscaler.kubernetes.io/safe-to-evict "
+        kubectl -n kube-system annotate deployment.apps/cluster-autoscaler cluster-autoscaler.kubernetes.io/safe-to-evict="false"
+### Edit the cluster autoscaler deployment 
+        kubectl -n kube-system edit deployment.apps/cluster-autoscaler
+### replace YOUR-CLUSTER-NAME  and  add the following options
+       --balance-similar-node-group
+       --skip-nodes-with-system-pods=false
 ### NOTE : cluster autoscaler version sould match with your kubernetes cluster version    
 ### Deploy metrics-server
-    kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-    kubectl get hpa
-    kubectl get hpa <DEPLOYMENT-NAME> --watch
+      kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+      kubectl get hpa
+      kubectl get hpa <DEPLOYMENT-NAME> --watch
 
 
 
