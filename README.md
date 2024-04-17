@@ -57,6 +57,12 @@
     $ docker tag <IMAGE-NAME>:latest <ACCOUNTID>.dkr.ecr.us-west-2.amazonaws.com/<ECR-REPO-NAME>:latest
 ### docker push
     $ docker push <ACCOUNTID>.dkr.ecr.us-west-2.amazonaws.com/<ECR-REPO-NAME>:latest
+## Create EKS Cluster
+    eksctl create cluster --name <CLUSTER-NAME> --region <REGION> --node-type
+## OR
+    ( For Horizontal Pod Scaling & Cluster Autoscaling )
+    eksctl create cluster --name <CLUSTER-NAME> --region us-west-2 --managed --asg-access 
+    
 ### Create our deployment
     $ kubectl apply -f deployment.yaml
 ### Create service
