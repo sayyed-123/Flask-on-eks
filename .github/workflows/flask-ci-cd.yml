@@ -39,7 +39,7 @@ jobs:
       with:
         repository: sayyed-123/Flask-on-eks
         ref: 'main'
-        #token: ${{ secrets.G_TOKEN }}
+        token: ${{ secrets.G_TOKEN }}
     - name: setup git config
       run: |
         git config user.email "mudassar.sayyed45@gmail.com"
