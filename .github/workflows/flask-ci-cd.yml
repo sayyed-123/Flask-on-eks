@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v
+      uses: actions/checkout@v3
           
     - name: Install kubectl
       uses: azure/setup-kubectl@v2.0
