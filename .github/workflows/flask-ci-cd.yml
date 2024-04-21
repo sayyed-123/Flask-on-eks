@@ -6,10 +6,18 @@ on:
 jobs:
   Login-to-AWS-and-Build:
     runs-on: ubuntu-latest
-    if: ${{ github.actor != 'github-actions[bot]' && github.event_name != 'push' || github.event.pusher.name != 'github-actions[bot]' }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+    - name: Check last commit message
+      id: commit-message
+      run: echo "COMMIT_MESSAGE=$(git log -1 --pretty=format:'%s')" >> $GITHUB_ENV
+
+    - name: Skip if commit is automated
+      if: contains(env.COMMIT_MESSAGE, '[skip ci]')
+      run: |
+        echo "Automated commit detected - skipping job"
+        exit 0
           
     - name: Install kubectl
       uses: azure/setup-kubectl@v2.0
@@ -20,7 +28,7 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        #aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{secrets.REGION}}
     - name: Login to Amazon ECR
@@ -58,14 +66,5 @@ jobs:
       run: |
         kubectl apply -f deployment.yaml
         kubectl apply -f service.yaml
-    - name: Check last commit message
-      id: commit-message
-      run: echo "COMMIT_MESSAGE=$(git log -1 --pretty=format:'%s')" >> $GITHUB_ENV
-
-    - name: Skip if commit is automated
-      if: contains(env.COMMIT_MESSAGE, '[skip ci]')
-      run: |
-        echo "Automated commit detected - skipping job"
-        exit 0
 
 
