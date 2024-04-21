@@ -1,7 +1,7 @@
-name: Flask app deploy to EKS
+name: Flask on EKS
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
     
 jobs:
   Login-to-AWS-&-Build:
