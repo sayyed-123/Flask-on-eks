@@ -64,11 +64,9 @@
 ### Create service
     $ kubectl apply -f service.yaml
 ### access Flask app
-<<<<<<< HEAD
-    $ kubectl get services ( paste url to browser to access the Flask application)...
-=======
-    $ kubectl get services ( paste url to browser to access the Flask application)
-====================================================================================================================
+    kubectl get services ( paste url to browser to access the Flask application)...
+
+==========================================================================
 
 https://cmakkaya.medium.com/kubernetes-creating-and-testing-a-horizontal-pod-autoscaling-hpa-in-kubernetes-cluster-548f2378f0c3
 
