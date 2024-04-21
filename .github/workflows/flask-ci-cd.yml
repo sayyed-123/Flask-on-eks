@@ -47,8 +47,8 @@ jobs:
         sed 's/TAG/${{ github.sha }}/g' dep-demo.yaml > deployment.yaml
         git add .
         git commit -m "Update image for - ${{ github.sha }}"
-    - run: echo ${{ github }}
-    - run: git push origin main
+    #- run: echo ${{ github }}
+    #- run: git push origin main
     - run: exit
 
     - name: Update kube config
