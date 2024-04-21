@@ -49,6 +49,7 @@ jobs:
         git commit -m "Update image for - ${{ github.sha }}"
     - run: echo ${{ github }}
     - run: git push origin main
+    - run: exit
 
     - name: Update kube config
       run: aws eks update-kubeconfig --name my-cluster
