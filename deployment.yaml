@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
         - name: back-end
-          image: 440896245143.dkr.ecr.us-west-2.amazonaws.com/webapp:157e77229e0d0094cf1bc4e3b73d073762ec0fa2 
+          image: 440896245143.dkr.ecr.us-west-2.amazonaws.com/webapp:76e8f3f2b1821894fb19285f6408755c5d364927 
           ports:
             - containerPort: 5000
