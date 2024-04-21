@@ -19,7 +19,7 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        #aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{secrets.REGION}}
     - name: Login to Amazon ECR
@@ -37,7 +37,7 @@ jobs:
     - name: login repo    
       uses: actions/checkout@v3
       with:
-        repository: sayyed-123/Flask-on-eks
+        repository: sayyed-123/flask-eks-infra
         ref: 'main'
         token: ${{ secrets.G_TOKEN }}
     - name: setup git config
@@ -46,10 +46,7 @@ jobs:
         git config user.name "sayyed-123"
         sed 's/TAG/${{ github.sha }}/g' dep-demo.yaml > deployment.yaml
         git add .
-        git commit -m "skip ci, Update image for - ${{ github.sha }}
-        
-        
-        skip-checks: true"
+        git commit -m "skip ci, Update image for - ${{ github.sha }}"
         git push origin main
     
     - name: Update kube config
