@@ -35,9 +35,13 @@ jobs:
         docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
     - name: update-manifest-file
+      env:
+        REPOSITORY: ${{secrets.ECR_REPO_NAME}}
+        REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+
       run: |
         echo${{github.sha}}
-        sed -i "s#${{ github.actor }}.*#${{ github.actor }}/$REPOSITORY:${{ github.sha }}#g" deployment.yaml
+        sed -i "s#$REGISTRY/$REPOSITORY:${{ github.sha }}#g" deployment.yaml
         git add -A
         git commit -am "Update image for - ${{ github.sha }}"
     - run: echo ${{ github }}
