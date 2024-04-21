@@ -9,11 +9,7 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-      with:
-        repository: sayyed-123/Flask-on-eks
-        ref: 'main'
-        token: ${{ secrets.G_TOKEN }}
-
+      
     - name: Install kubectl
       uses: azure/setup-kubectl@v2.0
       with:
@@ -38,21 +34,21 @@ jobs:
       run: |
         docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-
-    - name: update-manifest-file
-      env:
-        REPOSITORY: ${{secrets.ECR_REPO_NAME}}
-        REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-
+    - name: login repo    
+      uses: actions/checkout@v3
+      with:
+        repository: sayyed-123/Flask-on-eks
+        ref: 'main'
+        token: ${{ secrets.G_TOKEN }}
+    - name: setup git config
       run: |
-        echo${{github.sha}}
-        sed -i "s#$REGISTRY/$REPOSITORY:${{ github.sha }}#g" deployment.yaml
-        git add -A
-        git commit -am "Update image for - ${{ github.sha }}"
+        git config user.email "mudassar.sayyed45@gmail.com"
+        git config user.name "sayyed-123"
+        sed 's/TAG/${{ github.sha }}/g' dep-demo.yaml > deployment.yaml
+        git add .
+        git commit -m "Update image for - ${{ github.sha }}"
     - run: echo ${{ github }}
-    - run: git push
-  
- 
+    - run: git push origin main
 
     - name: Update kube config
       run: aws eks update-kubeconfig --name my-cluster
