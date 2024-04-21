@@ -9,6 +9,10 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+      with:
+        repository: sayyed-123/Flask-on-eks
+        ref: 'main'
+        token: ${{ secrets.G_TOKEN }
 
     - name: Install kubectl
       uses: azure/setup-kubectl@v2.0
@@ -34,7 +38,7 @@ jobs:
       run: |
         docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-        
+
     - name: update-manifest-file
       env:
         REPOSITORY: ${{secrets.ECR_REPO_NAME}}
