@@ -9,16 +9,7 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-    - name: Check last commit message
-      id: commit-message
-      run: echo "COMMIT_MESSAGE=$(git log -1 --pretty=format:'%s')" >> $GITHUB_ENV
-
-    - name: Skip if commit is automated
-      if: contains(env.COMMIT_MESSAGE, '[skip ci]')
-      run: |
-        echo "Automated commit detected - skipping job"
-        exit 0
-          
+             
     - name: Install kubectl
       uses: azure/setup-kubectl@v2.0
       with:
@@ -28,7 +19,7 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        #aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{secrets.REGION}}
     - name: Login to Amazon ECR
@@ -56,8 +47,7 @@ jobs:
         sed 's/TAG/${{ github.sha }}/g' dep-demo.yaml > deployment.yaml
         git add .
         git commit -m "skip ci, Update image for - ${{ github.sha }}"
-    - run: echo ${{ github }}
-    - run: git push origin main
+        git push origin main
     
     - name: Update kube config
       run: aws eks update-kubeconfig --name my-cluster
