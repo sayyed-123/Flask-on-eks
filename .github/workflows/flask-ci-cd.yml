@@ -9,7 +9,7 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-      
+             
     - name: Install kubectl
       uses: azure/setup-kubectl@v2.0
       with:
@@ -37,7 +37,7 @@ jobs:
     - name: login repo    
       uses: actions/checkout@v3
       with:
-        repository: sayyed-123/Flask-on-eks
+        repository: sayyed-123/flask-eks-infra
         ref: 'main'
         token: ${{ secrets.G_TOKEN }}
     - name: setup git config
@@ -46,10 +46,9 @@ jobs:
         git config user.name "sayyed-123"
         sed 's/TAG/${{ github.sha }}/g' dep-demo.yaml > deployment.yaml
         git add .
-        git commit -m "Update image for - ${{ github.sha }}"
-    - run: echo ${{ github }}
-    - run: git push origin main
-
+        git commit -m "skip ci, Update image for - ${{ github.sha }}"
+        git push origin main
+    
     - name: Update kube config
       run: aws eks update-kubeconfig --name my-cluster
     
@@ -57,6 +56,5 @@ jobs:
       run: |
         kubectl apply -f deployment.yaml
         kubectl apply -f service.yaml
-    - run: exit
 
 
