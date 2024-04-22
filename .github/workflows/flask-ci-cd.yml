@@ -10,11 +10,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
              
-    - name: Install kubectl
-      uses: azure/setup-kubectl@v2.0
-      with:
-        version: 'v1.29.0' # default is latest stable
-      id: install
+    #- name: Install kubectl
+     # uses: azure/setup-kubectl@v2.0
+      #with:
+       # version: 'v1.29.0' # default is latest stable
+      #id: install
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -44,17 +44,17 @@ jobs:
       run: |
         git config user.email "mudassar.sayyed45@gmail.com"
         git config user.name "sayyed-123"
-        sed 's/TAG/${{ github.sha }}/g' dep-demo.yaml > deployment.yaml
+        sed 's/TAG/${{ github.sha }}/g' demo/dep-demo.yaml > deployment.yaml
         git add .
-        git commit -m "skip ci, Update image for - ${{ github.sha }}"
+        git commit -m " Update image for - ${{ github.sha }}"
         git push origin main
     
-    - name: Update kube config
-      run: aws eks update-kubeconfig --name my-cluster
+    #- name: Update kube config
+     # run: aws eks update-kubeconfig --name my-cluster
     
-    - name: Deploy to EKS
-      run: |
-        kubectl apply -f deployment.yaml
-        kubectl apply -f service.yaml
+    #- name: Deploy to EKS
+     # run: |
+      #  kubectl apply -f deployment.yaml
+       # kubectl apply -f service.yaml
 
 
