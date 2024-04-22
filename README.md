@@ -90,7 +90,7 @@ https://katharharshal1.medium.com/kubernetes-cluster-autoscaling-ca-using-aws-ek
       kubectl get hpa
       kubectl get hpa <DEPLOYMENT-NAME> --watch
 
->>>>>>> f3452c13bad7017f68d3bd93bd621dcca04bec3c
+##
 
 
 
